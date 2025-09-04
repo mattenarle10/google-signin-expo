@@ -62,7 +62,14 @@ export default function Index() {
           <Button title="Sign in with Google" onPress={onSignIn} />
         ) : (
           <>
-            <Text style={styles.text}>Signed in as: {user.user?.email || user.user?.name}</Text>
+            <Text style={styles.text}>
+              Signed in as: {user?.user?.email ?? user?.user?.name ?? '(no email returned)'}
+            </Text>
+            {!user?.user?.email ? (
+              <Text style={styles.hint}>
+                Hint: Ensure the 'email' scope is enabled and the Google account shares email.
+              </Text>
+            ) : null}
             <View style={{ height: 12 }} />
             <Button title="Sign out" onPress={onSignOut} />
           </>
@@ -78,5 +85,6 @@ const styles = StyleSheet.create({
   content: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   title: { fontSize: 22, fontWeight: '600', marginBottom: 16 },
   text: { marginTop: 12, fontSize: 16 },
+  hint: { marginTop: 4, fontSize: 12, color: '#666' },
   error: { marginTop: 12, color: 'red' },
 });
