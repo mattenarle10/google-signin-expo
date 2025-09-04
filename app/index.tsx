@@ -4,8 +4,7 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 
 // Client IDs provided by the user
 const IOS_CLIENT_ID = '99604197598-s1f2s14gtoffdt3rtkmu479275etl5l4.apps.googleusercontent.com';
-// This is typically a Web client ID (has a client secret file in GCP). It's safe to include the ID (not the secret) in app code.
-const WEB_CLIENT_ID = '99604197598-njco2u6op9f73d6qpjo779fkkkrka826.apps.googleusercontent.com';
+// Note: No webClientId is set since we are not using a Web OAuth client.
 
 export default function Index() {
   const [user, setUser] = useState<any | null>(null);
@@ -14,8 +13,6 @@ export default function Index() {
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId: IOS_CLIENT_ID,
-      // Setting webClientId enables getting idToken on Android (and iOS) without Firebase config files
-      webClientId: WEB_CLIENT_ID,
       scopes: ['profile', 'email'],
     });
   }, []);
