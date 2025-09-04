@@ -35,3 +35,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Google OAuth client files (do not commit secrets)
+client_secret*.json
+client_*.plist
