@@ -41,6 +41,16 @@ You can set up with or without Firebase. These steps use Google Cloud Console di
        Copy the SHA1 line into the Android OAuth client ID config.
    - Optional Web Client (only needed for server auth/refresh tokens): create a Web application client and record its Client ID.
 
+**Current project debug fingerprints (local dev build)**
+
+- Android package: `com.mattenarle10.googlepoc`
+- Debug SHA-1 (app module keystore used by this build):
+  `5E:8F:16:06:2E:A3:CD:2C:4A:0D:54:78:76:BA:A6:F3:8C:AB:F6:25`
+- Alternative debug SHA-1 (default keystore at `~/.android/debug.keystore`):
+  `02:4B:B3:A5:B4:86:4C:B4:A6:9A:C5:D4:C7:B4:05:6E:93:31:FA:36`
+
+Use the first SHA-1 for this project’s current Android OAuth client in Google Cloud Console. If you ever build/sign using the default `~/.android/debug.keystore`, add the second SHA-1 to another Android OAuth client.
+
 Keep the resulting Client IDs handy:
 - iOS Client ID: looks like `1234567890-xxxxxxx.apps.googleusercontent.com`
 - Android Client ID: looks like `1234567890-yyyyyyy.apps.googleusercontent.com`
