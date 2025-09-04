@@ -26,11 +26,32 @@ export default function Index() {
       if (Platform.OS === 'android') {
         await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       }
-      const info = await GoogleSignin.signIn();
-      setUser(info);
-      // If you need tokens:
-      // const tokens = await GoogleSignin.getTokens();
-      // console.log('Tokens:', tokens);
+      const info: any = await GoogleSignin.signIn();
+      // Try to ensure we have an email by falling back to the Google UserInfo endpoint
+      let merged: any = info;
+      try {
+        const tokens = await GoogleSignin.getTokens();
+        if (!info?.user?.email && tokens?.accessToken) {
+          const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${tokens.accessToken}` },
+          });
+          if (res.ok) {
+            const userinfo = await res.json();
+            merged = {
+              ...info,
+              user: {
+                ...info?.user,
+                email: userinfo?.email ?? info?.user?.email,
+                name: info?.user?.name ?? userinfo?.name,
+                // picture may also be useful: userinfo?.picture
+              },
+            } as any;
+          }
+        }
+      } catch (_) {
+        // ignore fallback errors; we'll still show whatever we have
+      }
+      setUser(merged);
     } catch (e: any) {
       if (e?.code === statusCodes.SIGN_IN_CANCELLED) {
         setError('Sign in cancelled');
