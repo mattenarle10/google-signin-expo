@@ -5,7 +5,17 @@ It’s a repeatable guide you can follow to wire it into your own project.
 
 ---
 
-## Quick Start
+## ✅ TODO
+
+* [ ] Integrate Firebase user management (save user in DynamoDB)
+* [ ] Add Facebook login alongside Google
+* [ ] Handle logout flow 🔓
+* [ ] Test on both iOS + Android physical devices
+
+
+---
+
+## 🚀 Quick Start
 
 ```bash
 git clone https://github.com/<your-org>/google-poc.git
@@ -25,13 +35,14 @@ IDs used in this repo:
 
 ---
 
-## 1. Google Cloud Console Setup
+## 1️⃣ Google Cloud Console Setup
 
-1. Go to [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials).
+1. Go to Google Cloud Console → Credentials
+
 2. Create OAuth client IDs:
 
-   * **iOS** → Bundle ID `com.mattenarle10.googlepoc`
-   * **Android** → Package `com.mattenarle10.googlepoc` + SHA-1 from your debug keystore:
+   * iOS → Bundle ID `com.mattenarle10.googlepoc`
+   * Android → Package `com.mattenarle10.googlepoc` + SHA-1 from your debug keystore:
 
      ```bash
      keytool -list -v \
@@ -39,12 +50,12 @@ IDs used in this repo:
        -alias androiddebugkey \
        -storepass android -keypass android
      ```
-   * (Optional) Web client → only if you need Firebase/Auth backend
-3. Keep the client IDs handy.
+
+3. Keep the client IDs handy
 
 ---
 
-## 2. Native Google Sign-In (Recommended)
+## 2️⃣ Native Google Sign-In (Recommended)
 
 ```bash
 npm install @react-native-google-signin/google-signin
@@ -70,7 +81,7 @@ Add plugin in `app.json`:
 
 Minimal usage:
 
-```ts
+```tsx
 import { useEffect } from 'react';
 import { Button, Platform } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -91,13 +102,13 @@ export default function SignInButton() {
     console.log(user, tokens);
   };
 
-  return <Button title="Sign in with Google" onPress={onPress} />;
+  return <Button title="🔑 Sign in with Google" onPress={onPress} />;
 }
 ```
 
 ---
 
-## 3. Firebase (Optional)
+## 3️⃣ Firebase Integration
 
 If you want Firebase Auth:
 
@@ -117,23 +128,6 @@ await auth().signInWithCredential(cred);
 
 ---
 
-## 4. Alternative: Expo AuthSession
-
-For quick iteration (works in Expo Go):
-
-```ts
-import * as Google from 'expo-auth-session/providers/google';
-
-const [req, res, promptAsync] = Google.useAuthRequest({
-  iosClientId: '<IOS_CLIENT>',
-  androidClientId: '<ANDROID_CLIENT>',
-});
-
-<Button title="Sign in with Google" onPress={() => promptAsync()} disabled={!req} />
-```
-
----
-
 ## Troubleshooting
 
 * iOS closes instantly → wrong/missing `iosUrlScheme`
@@ -146,4 +140,3 @@ const [req, res, promptAsync] = Google.useAuthRequest({
 
 * [Expo: Google Auth](https://docs.expo.dev/guides/google-authentication/)
 * [Google Sign-In Docs](https://react-native-google-signin.github.io/docs/setting-up/expo)
-* [Expo AuthSession](https://docs.expo.dev/versions/latest/sdk/auth-session/)
